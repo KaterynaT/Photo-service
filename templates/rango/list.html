@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+    <head>
+        <meta charset="utf-8">
+    <title>Photo</title>
+       
+    <link rel="stylesheet" href="{% static "css/jquery.freetrans.css" %}" />
+    <link rel="stylesheet" href="{% static "css/my.css" %}" />
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.10.3/jquery-ui.min.js"></script>
+    <script src="{% static "js/jquery-1.11.2.js" %}"></script> 
+    <script src="{% static "js/Matrix.js" %}"></script> 
+    <script src="{% static "js/jquery.freetrans.js" %}"></script> 
+    <script>
+        
+        $(function(){
+        $('#tu').freetrans({x:300,y:300})
+		});
+        
+        $(document).ready(function(){
+        $('#tu').hide();      
+        $('#tu').freetrans('controls', false);      
+        $(".label_item").click(function(){ 
+        $('#tu').show();    
+            
+    });
+        $("#two").click(function(){ 
+        $("#tu").freetrans('controls');
+    });
+            
+        $("#three").click(function(){
+        var o = $("#tu").freetrans('getOptions');
+        var pos = $("#tu").position();
+        var tr = $("#tu").offset();
+        var w = Math.round(o.scalex*80);
+        var h = Math.round(o.scaley*58);
+        var x = Math.round(pos.left);
+        var angle = Math.round(o.angle);
+        var y = Math.round(pos.top);
+        document.getElementsByName("x")[0].value = x;
+        document.getElementsByName("y")[0].value = y;
+        document.getElementsByName("angle")[0].value = angle;
+        document.getElementsByName("width")[0].value = w;
+        document.getElementsByName("height")[0].value = h;
+        document.getElementById('mainform').submit();
+            
+    });
+            
+         
+             
+});
+        
+		</script>
+    
+    </head>
+    <body>
+            
+        <div class="container">
+            <div class="picture-container">
+                <img class="background-picture" src="{{documents.docfile.url}}"/>
+                <div class="avatar">
+                    <img id="tu" src="">
+                </div>
+            </div>
+        </div>
+       
+        <form action="/rango/parametres/" id="whiskers" method="post">
+            {% csrf_token %}
+        <input type="radio" class="radio_item" name="beard" value= "{% static "images/beard2.png" %}" id="radio1" onclick="myFunction()">
+            <label class="label_item" for="radio1"> <img src="{% static "images/beard2.png" %}" id="tip"> </label>
+        <input type="radio" class="radio_item" name="beard" value="{% static "images/beard1.png" %}" id="radio2" onclick="myFunction()">
+            <label class="label_item" for="radio2"> <img src="{% static "images/beard1.png" %}" id="tip2"> </label>
+        <input type="radio" class="radio_item" name="beard" value= "{% static "images/whiskers.png" %}" id="radio3" onclick="myFunction()">
+            <label class="label_item" for="radio3"> <img src="{% static "images/whiskers.png" %}" id="tip3"> </label><br>
+        <input name="address" id="address" type = "hidden"></input>
+        
+       
+            <input name="x" type = "hidden"></input>
+            <input name="y" type = "hidden"></input>
+            <input name="angle" type = "hidden"></input>
+            <input name="width" type = "hidden"></input>
+            <input name="height" type = "hidden"></input>
+            <input type="submit" name="submit" id="submit" value="Save new image" />
+
+        </form>
+
+        <p>
+           <button id="two">Rotate and scale elements</button>
+           <button id="three">Submit changes</button>
+        </p>
+        <a href= "{{documents.docfile.url}}" download>
+            <button id = "download">Download to the folder</button>
+        </a>
+
+<script>
+function myFunction() {
+    var beard = document.forms[0];
+    var txt = "";
+    var i;
+    for (i = 0; i < beard.length; i++) {
+        if (beard[i].checked) {
+            txt = txt + beard[i].value;
+        }
+    }
+    document.getElementById("address").value = txt;
+    document.getElementById("tu").src = (txt);
+}
+</script>
+
+
+
+    </body>
+</html>

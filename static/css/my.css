@@ -1,0 +1,58 @@
+.container {
+    width: 600px;
+    margin-left: 300px;
+    background-color: grey;
+    position: relative;
+}
+.container .picture-container {
+    position: relative;
+}
+.container .background-picture {
+    width: 600px;
+}
+.container .avatar {
+    position: absolute;
+    z-index: 5;
+    top: 0px;
+    left: 0px;
+    width: 600px;
+}
+.container .avatar img {
+    width: 80px;
+}
+
+.radio_item{
+    display: none;
+}
+#tip{
+    width: 80px;
+}
+#tip2{
+    width: 80px;
+}
+#tip3{
+    width: 80px;
+}
+#tu{
+    width: 80px;
+    height: 58px;
+}
+#submit{
+    position: absolute;
+    margin-left: 500px;
+    margin-top: 50px;
+}
+#two{
+    position: absolute;
+    margin-left: 300px;
+    margin-top: -70px;
+}
+#three{
+    position: absolute;
+    margin-left: 500px;
+}
+#download{
+    position: absolute;
+    margin-left: 480px;
+    margin-top: 70px;
+}
