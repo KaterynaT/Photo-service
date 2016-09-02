@@ -16,8 +16,6 @@ from PIL import Image
 import os
 from django.conf import settings 
 
-settings.BASE_DIR
-
 
 
 def index(request):
@@ -134,14 +132,14 @@ def parametres(request):
     documents = Document.objects.all().last()
     filepath = documents.docfile.url
     basewidth = 600
-    im1 = Image.open(BASE_DIR+filepath)
+    im1 = Image.open(settings.BASE_DIR+filepath)
     wpercent = (basewidth / float(im1.size[0]))
     hsize = int((float(im1.size[1])*float(wpercent)))
     im1 = im1.resize((basewidth,hsize))
-    im2 = Image.open(BASE_DIR+addr)
+    im2 = Image.open(settings.BASE_DIR+addr)
     im2 = im2.resize((width,height)).rotate(-angle, expand=1)
     im1.paste(im2, (position_x,position_y),im2)
-    im1.save(BASE_DIR+filepath)
+    im1.save(settings.BASE_DIR+filepath)
     form = DocumentForm(request.POST, request.FILES)
     return render_to_response(
         'rango/list.html',
