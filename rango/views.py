@@ -14,8 +14,9 @@ from django.core.files import File
 import PIL
 from PIL import Image
 import os
+from django.conf import settings 
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__).decode('utf-8')))
+settings.BASE_DIR
 
 
 
