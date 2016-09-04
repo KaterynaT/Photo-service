@@ -5,9 +5,10 @@ from django.template import RequestContext
 from django.http import HttpResponse, HttpResponseRedirect
 from rango.forms import UserForm, UserProfileForm, DocumentForm, ParametresForm
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
-from rango.models import Document
+from rango.models import Document, User
 from django.core.urlresolvers import reverse
 from django.core.files.base import ContentFile
 from django.core.files import File
@@ -15,6 +16,7 @@ import PIL
 from PIL import Image
 import os
 from django.conf import settings 
+
 
 
 
@@ -103,6 +105,10 @@ def list(request):
         form = DocumentForm(request.POST, request.FILES)
         if form.is_valid():
             newdoc = Document(docfile = request.FILES['docfile'])
+            if request.user.is_authenticated():
+                newdoc.user = request.user
+            else:
+                newdoc.user_id = 0
             newdoc.save()
             
         else:
