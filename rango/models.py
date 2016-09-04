@@ -13,8 +13,7 @@ class UserProfile(models.Model):
     
 class Document(models.Model):
     docfile = models.ImageField(upload_to='profile_images')
-    whiskers = models.ImageField(default = "whiskers_images/beard_PNG6268.png")
-    #newimage = models.ImageField
+    user = models.ForeignKey(User, null=True)
     
 
 
