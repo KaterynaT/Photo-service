@@ -8,7 +8,8 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
-from rango.models import Document, User
+from rango.models import Document
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import reverse
 from django.core.files.base import ContentFile
 from django.core.files import File
@@ -149,7 +150,25 @@ def parametres(request):
     form = DocumentForm(request.POST, request.FILES)
     return render_to_response(
         'rango/list.html',
-        {'documents': documents},
+        {'documents': documents, 'form': form},
         context_instance=RequestContext(request)
     )
+
+
+def pagin(request):
+    user_list = Document.objects.all()
+    page = request.GET.get('page', 1)
+
+    paginator = Paginator(user_list, 20)
+    try:
+        documents = paginator.page(page)
+    except PageNotAnInteger:
+        documents = paginator.page(1)
+    except EmptyPage:
+        documents = paginator.page(paginator.num_pages)
+
+    return render(request, 'rango/pagin.html', { 'documents': documents })
+
+
+
 
