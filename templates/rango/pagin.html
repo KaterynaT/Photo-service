@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Rango</title>
+    </head>
+
+    <body>
+
+<table class="table table-bordered">
+  <tbody>
+    {% for document in documents %}
+       <a href="{{ document.docfile.url }}">
+        <img src="{{ document.docfile.url }}" width = "200">
+        </a>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% if documents.has_other_pages %}
+  <ul class="pagination">
+    {% if documents.has_previous %}
+      <li><a href="?page={{ documents.previous_page_number }}">&laquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&laquo;</span></li>
+    {% endif %}
+    {% for i in documents.paginator.page_range %}
+      {% if documents.number == i %}
+        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+      {% else %}
+        <li><a href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if documents.has_next %}
+      <li><a href="?page={{ documents.next_page_number }}">&raquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&raquo;</span></li>
+    {% endif %}
+  </ul>
+{% endif %}
+        </body>
+</html>
